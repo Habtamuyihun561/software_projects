@@ -1,0 +1,206 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+body{
+	margin-left: 5%;
+	margin-right: 5%;
+	background-image: url(image.jpg);
+	background-size: cover;
+}
+input[type="checkbox"]{
+      display: none;
+    }
+   #delet:checked ~ .container{
+    display: block;
+   }
+   .container{
+    display:none;
+    background-color: green;
+    position: absolute;
+    border: 2px solid black;
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 30%;
+    padding: 10px;
+   
+   }
+   .show_btn{
+   	color: blue;
+   	border-bottom: 1px solid blue;
+   }
+   .delete{
+     width: 70%;
+     margin-left: 15%;
+
+   }
+   .delete input{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+   }
+   .container h1{
+    text-align: center;
+   }
+   .delete button{
+    margin-left: 25%;
+    width: 50%;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 30px;
+   
+   }
+   .delete button:hover{
+    background-color: blue;
+
+   }
+   .delete textarea{
+   	width: 100%;
+   	height: 100px;
+   	text-align: center;
+   	font-size: 20px;
+   	margin-top: 30px;
+   }
+   .close_btn{
+    text-align: center;
+    font-size: 30px;
+    width: 10%;
+   float: right;
+    color: black;
+   }
+   
+  .close_btn:hover{
+    color: white;
+    background-color: red;
+   }
+.header{
+	height: 200px;
+	width: 100%;
+	background-color: blue;
+		
+}
+ table{
+	width: 100%;
+	margin-top: 20px;
+	text-align: center;
+}
+ 
+ .th{
+	
+	text-align: center;
+
+} 
+.action{
+      width: 12%;
+
+}
+
+.tth{
+	width: 40%;
+}
+ table td{
+ 	text-align: center;
+	font-size: 20px;
+}
+
+ table{
+  border: 2px solid black;
+}
+th,td{ 
+	border-bottom: 2px solid black;
+	border-left: 2px solid black;
+}
+.logo{
+	height: 150px;
+	background-color: #0080ff;
+		}
+.logo h1{
+	text-align: center;
+	font-size: 70px;
+	line-height: 120px;
+	text-transform: uppercase;
+}
+.logo_left{
+	float: left;
+}
+.logo_right{
+	float: right;
+}
+.navigator{
+	background-color: blue;
+}
+.navigator ul{
+	width: 70%;
+	float: right;
+	list-style:none;
+}
+.navigator ul li{
+	width: 15%;
+	text-align: center;
+	float: left;
+	line-height: 50px;
+	font-size: 20px;
+	color: green;
+}
+.navigator ul li a{
+    text-decoration: none;
+    color: #fff;
+}
+.navigator ul li:hover{
+    background: #2bab0d;
+    border-radius: 4px;
+}
+.content{
+	box-sizing: border-box;
+	width: 100%;
+	background-color: white;
+	border: 2px solid black;
+}
+
+.content_left{ 
+	border-radius: 20px;
+	background-color: white;;
+		
+	padding: 30px;
+	
+}
+.content_left h1{
+	text-align: center;
+	margin-top: 30px;
+
+}
+.content_left p{
+	font-size: 18px;
+	text-align: center;
+	
+}
+
+
+.footer{
+	display: inline-flex;
+	left:0;
+	bottom:0;
+	border-radius: 20px;
+	padding-bottom: 30px;
+	background-color:#867979;
+}
+.left{
+	padding: 30px;
+	width: 30%;
+	float: left;
+
+   }
+.center{
+	padding: 30px;
+	width: 30%;
+	float:left;
+
+    }
+.right{
+	padding: 30px;
+	width: 30%;
+	float: right;
+   }

@@ -1,0 +1,9 @@
+name = quick
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = quick
+dependencies[] = features
+dependencies[] = menu
+features[features_api][] = api:2
+features[menu_custom][] = menu-qiuck-links

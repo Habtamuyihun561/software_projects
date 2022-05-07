@@ -1,0 +1,239 @@
+<?php
+
+// Module constants.
+define('SOCBUTT_LAYOUT_VERTICAL', 0);
+define('SOCBUTT_LAYOUT_HORIZONTAL', 1);
+
+/**
+ * Implements hook_token_info().
+ */
+function socbutt_token_info() {
+  $info = array();
+
+  $info['types']['socbutt'] = array(
+    'name' => t('Socbutt tokens'),
+    'description' => t("Socbutt tokens."),
+  );
+
+  $info['tokens']['socbutt']['vertical'] = array(
+    'name' => t("Social button bar, vertical"),
+    'description' => t("Social button bar, vertical layout."),
+  );
+
+  $info['tokens']['socbutt']['horizontal'] = array(
+    'name' => t("Social button bar, horizontal"),
+    'description' => t("Social button bar, horizontal layout."),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function socbutt_tokens($type, $tokens, $data = array(), $options = array()) {
+  $replacements = array();
+
+  if ($type == 'socbutt') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'vertical':
+          $replacements[$original] = theme('socbutt_buttons', array(
+            'layout' => SOCBUTT_LAYOUT_VERTICAL
+          ));
+          break;
+
+        case 'horizontal':
+          $replacements[$original] = theme('socbutt_buttons', array(
+            'layout' => SOCBUTT_LAYOUT_HORIZONTAL
+          ));
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function socbutt_block_info() {
+  $blocks = array();
+
+  $blocks['vertical'] = array(
+    'info' => t('Social buttons: vertical layout'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  );
+
+  $blocks['horizontal'] = array(
+    'info' => t('Social buttons: horizontal layout'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function socbutt_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'vertical':
+      $block['subject'] = NULL;
+      $block['content'] = theme('socbutt_buttons', array(
+        'layout' => SOCBUTT_LAYOUT_VERTICAL
+      ));
+      break;
+
+    case 'horizontal':
+      $block['subject'] = NULL;
+      $block['content'] = theme('socbutt_buttons', array(
+        'layout' => SOCBUTT_LAYOUT_HORIZONTAL
+      ));
+      break;
+  }
+
+  return $block;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function socbutt_theme() {
+  return array(
+    'socbutt_buttons' => array(
+      'variables' => array(
+        'layout' => SOCBUTT_LAYOUT_VERTICAL,
+        'title' => NULL,
+        'body' => NULL,
+        'url' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Theme function to render social buttons.
+ */
+function theme_socbutt_buttons($variables) {
+  global $base_url;
+
+  // Let other modules alter the buttons if needed.
+  drupal_alter('socbutt_buttons', $variables);
+
+  $path = drupal_get_path('module', 'socbutt');
+  $horizontal = ($variables['layout'] == SOCBUTT_LAYOUT_HORIZONTAL);
+  $tag = $horizontal ? 'span' : 'div';
+  $horizontal_class = $horizontal ? ' inline' : '';
+  $current_url = $base_url . '/' . request_path();
+
+  // Preparing default sharing data.
+  $share_data = array(
+    'title' => !is_null($variables['title']) ? $variables['title'] : drupal_get_title(),
+    'body' => !is_null($variables['body']) ? $variables['body'] : '',
+    'url' => !is_null($variables['url']) ? $variables['url'] : $current_url,
+  );
+
+  // URL encode so the strings can be used inside URLs;
+  foreach ($share_data as $key => $data) {
+    $share_data[$key] = rawurlencode($data);
+  }
+
+  $title   = $share_data['title'];
+  $body    = $share_data['body'];
+  $url     = $share_data['url'];
+  $btn_classes = array('btn', 'btn-info', 'btn-xs');
+  if (!$horizontal) {
+    $btn_classes[] = 'btn-block';
+  }
+
+  // Prepare render array.
+  $render_array = array(
+    '#prefix' => '<div class="social-share-links' . $horizontal_class . '">',
+    '#suffix' => '</div>',
+    '#attached' => array(
+      'css' => array($path . '/css/socbutt.min.css'),
+    ),
+  );
+
+  // Link for email.
+  $link = "mailto:?subject=$title&body=$body";
+  $text = '<span class="fa fa-fw fa-2x fa-envelope"></span> '. t('Email');
+  $render_array['email'] = array(
+    '#prefix' => '<' . $tag . ' class="share-link share-email">',
+    '#suffix' => "</$tag>",
+    '#markup' => l($text, $link, array(
+      'html' => TRUE,
+      'attributes' => array(
+        'class' => $btn_classes,
+      )
+    )),
+  );
+
+  // Facebook share.
+  $link = "https://www.facebook.com/sharer/sharer.php?u=$url";
+  $text = '<span class="fa fa-fw fa-2x fa-facebook"></span> ' . t('Facebook');
+  $render_array['facebook'] = array(
+    '#prefix' => '<' . $tag . ' class="share-link share-facebook">',
+    '#suffix' => "</$tag>",
+    '#markup' => l($text, $link, array(
+      'html' => TRUE,
+      'attributes' => array(
+        'target' => '_blank',
+        'class' => $btn_classes,
+      )
+    )),
+  );
+
+  // Twitter share.
+  $twitter_msg = $title . ' -'; // Twitter adds the $url after this automatically.
+  $link = "https://twitter.com/intent/tweet?text=$twitter_msg&url=$url";
+  $text = '<span class="fa fa-fw fa-2x fa-twitter"></span> ' . t('Twitter');
+  $render_array['twitter'] = array(
+    '#prefix' => '<' . $tag . ' class="share-link share-twitter">',
+    '#suffix' => "</$tag>",
+    '#markup' => l($text, $link, array(
+      'html' => TRUE,
+      'attributes' => array(
+        'target' => '_blank',
+        'class' => $btn_classes,
+      )
+    )),
+  );
+
+  // Google Plus share:
+  $link = "https://plus.google.com/share?url=$url";
+  $text = '<span class="fa fa-fw fa-2x fa-google-plus"></span> '. t('Google Plus');
+  $render_array['gplus'] = array(
+    '#prefix' => '<' . $tag . ' class="share-link share-gplus">',
+    '#suffix' => "</$tag>",
+    '#markup' => l($text, $link, array(
+      'html' => TRUE,
+      'attributes' => array(
+        'target' => '_blank',
+        'class' => $btn_classes,
+      )
+    )),
+  );
+
+  // LinkedIn share.
+  $link = "https://www.linkedin.com/shareArticle?mini=true&url=$url&title=$title&summary=$body&source=$url";
+  $text = '<span class="fa fa-fw fa-2x fa-linkedin"></span> ' . t('LinkedIn');
+  $render_array['linkedin'] = array(
+    '#prefix' => '<' . $tag . ' class="share-link share-linkedin">',
+    '#suffix' => "</$tag>",
+    '#markup' => l($text, $link, array(
+      'html' => TRUE,
+      'attributes' => array(
+        'target' => '_blank',
+        'class' => $btn_classes,
+      )
+    )),
+  );
+
+  // Render.
+  return $render_array;
+}

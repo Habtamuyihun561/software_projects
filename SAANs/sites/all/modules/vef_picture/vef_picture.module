@@ -1,0 +1,165 @@
+<?php
+/**
+ * @file
+ * 
+ * Contains the main module codebase for the Video Embed Field Picture project
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function vef_picture_field_formatter_info() {
+  $info = array();
+  
+  $info['video_embed_field_thumbnail_picture'] = array(
+    'label' => t('Thumbnail Preview - Picture'),
+    'field types' => array('video_embed_field'),
+    'settings' => array('picture_group' => '', 'fallback_image_style' => '', 'image_link' => ''),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function vef_picture_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $element['picture_group'] = array(
+    '#title' => t('Picture group'),
+    '#type' => 'select',
+    '#default_value' => $settings['picture_group'],
+    '#required' => TRUE,
+    '#options' => picture_get_mapping_options(),
+  );
+
+  $image_styles = image_style_options(FALSE);
+  $element['fallback_image_style'] = array(
+    '#title' => t('Fallback image style'),
+    '#type' => 'select',
+    '#default_value' => $settings['fallback_image_style'],
+    '#empty_option' => t('Automatic'),
+    '#options' => $image_styles,
+  );
+
+  $link_types = array(
+    'content' => t('Content'),
+    'file' => t('File'),
+  );
+  $element['image_link'] = array(
+    '#title' => t('Link image to'),
+    '#type' => 'select',
+    '#default_value' => $settings['image_link'],
+    '#empty_option' => t('Nothing'),
+    '#options' => $link_types,
+  );
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function vef_picture_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $summary = array();
+
+  $picture_mapping = picture_mapping_load($settings['picture_group']);
+  $breakpoint_group = breakpoints_breakpoint_group_load($picture_mapping->breakpoint_group);
+  if ($breakpoint_group) {
+    $summary[] = t('Picture group: @picture_group', array('@picture_group' => $breakpoint_group->name));
+  }
+  else {
+    $summary[] = t("Picture group doesn't exists");
+  }
+
+  $image_styles = image_style_options(FALSE);
+  unset($image_styles['']);
+  if (isset($image_styles[$settings['fallback_image_style']])) {
+    $summary[] = t('Fallback Image style: @style', array('@style' => $image_styles[$settings['fallback_image_style']]));
+  }
+  else {
+    $summary[] = t('Automatic fallback');
+  }
+
+  $link_types = array(
+    'content' => t('Linked to content'),
+    'file' => t('Linked to file'),
+  );
+  // Display this setting only if image is linked.
+  if (isset($link_types[$settings['image_link']])) {
+    $summary[] = $link_types[$settings['image_link']];
+  }
+
+  return implode('<br />', $summary);
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function vef_picture_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  // Check if the formatter involves a link.
+  if ($display['settings']['image_link'] == 'content') {
+    $uri = entity_uri($entity_type, $entity);
+  }
+  elseif ($display['settings']['image_link'] == 'file') {
+    $link_file = TRUE;
+  }
+
+  $breakpoint_styles = array();
+  $fallback_image_style = '';
+  $group_name = $display['settings']['picture_group'];
+  $mappings = picture_mapping_load($group_name);
+  if ($mappings) {
+    foreach ($mappings->mapping as $breakpoint_name => $multipliers) {
+      if (!empty($multipliers)) {
+        foreach ($multipliers as $multiplier => $image_style) {
+          if (!empty($image_style)) {
+            if (empty($fallback_image_style)) {
+              $fallback_image_style = $image_style;
+            }
+            if (!isset($breakpoint_styles[$breakpoint_name])) {
+              $breakpoint_styles[$breakpoint_name] = array();
+            }
+            $breakpoint_styles[$breakpoint_name][$multiplier] = $image_style;
+          }
+        }
+      }
+    }
+  }
+
+  if (isset($display['settings']['fallback_image_style']) && !empty($display['settings']['fallback_image_style'])) {
+    $fallback_image_style = $display['settings']['fallback_image_style'];
+  }
+
+  foreach ($items as $delta => $item) {
+    $item['uri'] = $item['thumbnail_path'];
+    if (isset($link_file)) {
+      $uri = array(
+        'path' => file_create_url($item['uri']),
+        'options' => array(),
+      );
+    }
+    $element[$delta] = array(
+      '#theme' => 'picture_formatter',
+      '#attached' => array('library' => array(
+        array('picture', 'matchmedia'),
+        array('picture', 'picturefill'),
+        array('picture', 'picture.ajax'),
+      )),
+      '#item' => $item,
+      '#image_style' => $fallback_image_style,
+      '#breakpoints' => $breakpoint_styles,
+      '#path' => isset($uri) ? $uri : '',
+    );
+  }
+
+  return $element;
+}
+

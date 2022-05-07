@@ -1,0 +1,14 @@
+name = Video Embed Field Picture
+description = Provides an alternative thumbnail field formatter for Video Embed Field that leverages the Picture module for image output
+core = 7.x
+package = Picture
+
+dependencies[] = picture
+dependencies[] = video_embed_field
+
+; Information added by drupal.org packaging script on 2013-04-23
+version = "7.x-1.0-alpha1"
+core = "7.x"
+project = "vef_picture"
+datestamp = "1366750514"
+

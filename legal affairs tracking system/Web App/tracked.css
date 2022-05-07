@@ -1,0 +1,546 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+body{
+	margin-left: 5%;
+	margin-right: 5%;
+	background-image: url(image.jpg);
+	background-size: cover;
+}
+input[type="checkbox"]{
+      display: none;
+    }
+   #delet:checked ~ .container{
+    display: block;
+   }
+   #start:checked ~ .container2{
+   	display: block;
+   }
+    #upload:checked ~ .container3{
+   	display: block;
+   }
+    #remined:checked ~ .container4{
+   	display: block;
+   }
+     #status:checked ~ .container1{
+   	display: block;
+   }
+
+   .container3{
+    display:none;
+    background-color: green;
+    position: absolute;
+    border: 2px solid black;
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 30%;
+    padding: 10px;
+   
+   }
+   .container1{
+    display:none;
+    background-color: green;
+    position: absolute;
+    border: 2px solid black;
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 30%;
+    padding: 10px;
+   
+   }
+   .container4{
+    display:none;
+    background-color: green;
+    position: absolute;
+    border: 2px solid black;
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 30%;
+    padding: 10px;
+   
+   }
+   .container2{
+    display:none;
+    background-color: green;
+    position: absolute;
+    border: 2px solid black;
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 30%;
+    padding: 10px;
+   
+   }
+   .container{
+    display:none;
+    background-color: green;
+    position: absolute;
+    border: 2px solid black;
+    width: 40%;
+    margin-top: 150px;
+    margin-left: 30%;
+    padding: 10px;
+   
+   }
+   .show_btn{
+   	color: blue;
+   	border-bottom: 1px solid blue;
+   }
+   .delete{
+     width: 70%;
+     margin-left: 15%;
+
+   }
+   .delete input{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+   }
+   .container h1{
+    text-align: center;
+   }
+   .delete button{
+    margin-left: 25%;
+    width: 50%;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 30px;
+   
+   }
+   .delete button:hover{
+    background-color: blue;
+
+   }
+   .delete textarea{
+   	width: 100%;
+   	height: 100px;
+   	text-align: center;
+   	font-size: 20px;
+   	margin-top: 30px;
+   }
+   .close_btn{
+    text-align: center;
+    font-size: 30px;
+    width: 10%;
+   float: right;
+    color: black;
+   }
+   .close_btn:hover{
+    color: white;
+    background-color: red;
+   }
+.all{
+
+	border-radius: 15px;
+	width: 100%;
+	background-color: white;
+}
+.header{
+	height: 205px;
+	width: 100%;
+	background-color: blue;
+	
+}
+.training_list{
+	background-color: white;
+	padding: 30px;
+	border-radius: 15px;
+}
+.logo{
+	height: 150px;
+	background-color: #0080ff;
+		}
+.logo h1{
+	text-align: center;
+	font-size: 70px;
+	line-height: 100px;
+	text-transform: uppercase;
+}
+.logo_left{
+	float: left;
+}
+.logo_right{
+	float: right;
+}
+.navigator{
+	width: 100%;
+}
+.navigator ul{
+	width: 100%;
+	list-style:none;
+}
+.navigator ul li{
+	width: 12%;
+	float: left;
+	line-height: 50px;
+	font-size: 20px;
+	color: green;
+	}
+.navigator ul li a{
+    text-decoration: none;
+    color: #fff;
+}
+.navigator ul li:hover{
+    background: #2bab0d;
+    border-radius: 4px;
+}
+.content{
+    background-color: white;
+	width: 100%;
+}
+
+.content_left{ 
+	border-radius: 20px;
+	width: 95%;
+	background-color: white;
+	padding: 30px;
+	
+}
+
+
+
+
+.dropdown{
+    display: none;
+}
+.navigator ul li:hover .dropdown
+{
+    display: block;
+    position: absolute;
+    background: blue;
+     width: 12%;
+
+    }
+.navigator ul li:hover .dropdown ul{
+	 display: block;
+
+	 margin-left: -10px;
+}
+.navigator li:hover .dropdown ul li{
+	width: 100%;
+    border-radius: 0;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    text-align:left;
+     margin-left: 30px;
+    }
+
+.navigator ul li:hover .dropdown ul li a:hover{
+    color: #b2ff00;
+}
+
+.secondDrop{
+    display: none;
+}
+.me:hover .secondDrop
+{
+    display: block;
+    position: absolute;
+    background: blue;\
+    margin-top: -30px;
+    margin-left: 100px;
+    width: 100%;
+    }
+ .me li:hover .secondDrop ul li{
+	width: 100%;
+    border-radius: 0;
+    border-bottom: 1px dotted #fff;
+    background: transparent;
+    text-align:left;
+
+        }
+
+
+.form_area{
+	margin-top: 40px;
+	border-radius: 20px;
+	width: 60%;
+	height: 1300px;
+	margin-left: 20%;
+	background-color: #ffcccc;
+	padding-top: 20px;
+	}
+	
+.form_area input{
+	color: blue;
+	align-items: center;
+	width: 70%;
+	height: 50px;
+	margin-left: 15%;
+	display: block;
+	margin-bottom: 60px;
+	text-align: center;
+	font-size: 20px;
+	font-style: italic;
+}
+.form_area textarea{
+	width: 70%;
+	margin-left: 15%;
+	text-align: center;
+	font-style: italic;
+	font-size: 20px;
+	border-radius: 20px;
+
+}
+.form_area h1{
+	text-align: center;
+	font-style: oblique;
+	font-size: 40px;
+	color: blue;
+	margin-bottom: 20px;
+}
+.form_area h2{
+	margin-left: 30%;
+	font-size: 20px;
+	color: #ff0040;
+	font-family: sans-serif;
+	font-style: oblique;
+	margin-bottom: 60px;
+}
+.form_area button{
+	margin-top: 100px;
+	height: 40px;
+	border-radius: 15px;
+	background-color: #0080ff;
+	text-align: center;
+	font-style: italic;
+	font-size: 20px;
+}
+.register{
+	width: 30%;
+	margin-left: 10%;
+}
+.edit{
+	width: 20%;
+	margin-left: 30%;
+
+}
+
+/*format for the data inside the content*/
+.content_left h1 {
+	text-align: center;
+}
+.content_left h2{
+	text-align: center;
+}
+.fileform{
+	width: 30%;
+	margin-left: 65%;
+	border: 2px solid black;
+}
+
+.fileform input{
+	width: 80%;
+	margin-left: 10%;
+	margin-bottom: 20px;
+	height: 30px;
+	text-align: center;
+	font-size: 20px;
+}
+.inline{
+	display: inline-flex;
+	box-sizing: border-box;
+}
+.fileform button{
+	width: 30%;
+	height: 30px;
+	font-size: 20px;
+	margin-left: 35%;
+	margin-bottom: 30px;
+}
+ table{
+	width: 100%;
+	margin-top: 20px;
+	text-align: center;
+}
+ 
+ .th{
+	
+	text-align: center;
+
+} 
+.Action{
+	border-left: 2px solid black; ;
+      width: 10%;
+
+}
+.action{
+	border-right: 2px solid black;
+}
+.tth{
+	width: 40%;
+}
+ table td{
+ 	text-align: center;
+	font-size: 20px;
+}
+
+ table{
+  border: 2px solid black;
+}
+th,td{ 
+	border-bottom: 2px solid black;
+	border-left: 2px solid black;
+}
+
+.footer{
+	border-radius: 20px;
+	display: inline-flex;
+	width: 100%;
+	left:0;
+	bottom:0;
+	padding-bottom: 30px;
+	background-color:#867979;
+}
+.left{
+	padding: 30px;
+	width: 30%;
+	float: left;
+
+}
+.center{
+	padding: 30px;
+	width: 30%;
+	float:left;
+
+}
+.right{
+	padding: 30px;
+	width: 30%;
+	float: right;
+}
+.con_left{
+	width: 33%;
+	background-color: white;
+    float: left;
+    padding: 30px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.con_center{
+	width: 33%;
+	margin-left: 1%;
+	background-color: white;
+    float: left;
+    padding: 30px;
+     border: 2px solid black;
+     border-radius: 10px;
+}
+.con_right{
+	width: 33%;
+	margin-left: 1%;
+	background-color: white;
+    float: right;
+    padding: 30px;
+     border: 2px solid black;
+     border-radius: 10px;
+}
+.con_left h1{
+	margin-bottom: 40px;
+	text-align: center;
+}
+.con_left input{
+	margin-bottom: 30px;
+	border-radius: 20px;
+	width: 80%;
+	height: 40px;
+	margin-left: 10%;
+	text-align: center;
+	font-size: 20px;
+}
+.con_left textarea{
+	margin-bottom: 30px;
+	border-radius: 20px;
+	width: 80%;
+	height: 200px;
+	margin-left: 10%;
+	text-align: center;
+	font-size: 20px;
+}
+.con_left button{
+	margin-top: 30px;
+	margin-bottom: 20px;
+	border-radius: 20px;
+	background-color: blue;
+	width: 25%;
+	margin-left: 3%;
+	height: 40px;
+	font-size: 25px;
+	font-family: sans-serif;
+	font-style: oblique;
+	text-align: center;
+}
+
+.con_center h1{
+	margin-bottom: 40px;
+	text-align: center;
+}
+.con_center input{
+	margin-bottom: 30px;
+	border-radius: 20px;
+	width: 80%;
+	height: 40px;
+	margin-left: 10%;
+	text-align: center;
+	font-size: 20px;
+}
+.con_center textarea{
+	margin-bottom: 30px;
+	border-radius: 20px;
+	width: 80%;
+	height: 200px;
+	margin-left: 10%;
+	text-align: center;
+	font-size: 20px;
+}
+.con_center button{
+	margin-top: 30px;
+	margin-bottom: 20px;
+	border-radius: 20px;
+	background-color: blue;
+	width: 25%;
+	margin-left: 3%;
+	height: 40px;
+	font-size: 25px;
+	font-family: sans-serif;
+	font-style: oblique;
+	text-align: center;
+}
+.con_right h1{
+	margin-bottom: 40px;
+	text-align: center;
+}
+.con_right input{
+	margin-bottom: 30px;
+	border-radius: 20px;
+	width: 80%;
+	height: 40px;
+	margin-left: 10%;
+	text-align: center;
+	font-size: 20px;
+}
+.con_right textarea{
+	margin-bottom: 30px;
+	border-radius: 20px;
+	width: 80%;
+	height: 200px;
+	margin-left: 10%;
+	text-align: center;
+	font-size: 30px;
+}
+.con_right button{
+	margin-top: 30px;
+	margin-bottom: 20px;
+	border-radius: 20px;
+	background-color: blue;
+	width: 25%;
+	margin-left: 3%;
+	height: 40px;
+	font-size: 25px;
+	font-family: sans-serif;
+	font-style: oblique;
+	text-align: center;
+}
